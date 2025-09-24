@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SP Gamer Tournaments</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* General Page Styles */
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #ff6600;
+        }
+        
+        h3 {
+            font-weight: 600;
+        }
+
+        /* Header Styles */
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #000;
+            border-bottom: 2px solid #ff6600;
+        }
+
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ff6600;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .main-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+
+        .main-nav a:hover {
+            color: #ff6600;
+        }
+
+        /* Hero Section Styles */
+        .hero {
+            position: relative;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #1a1a1a;
+            padding-top: 50px;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url(https://i.postimg.cc/wT93kst9/Hero.png);
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 100px 30px rgba(0, 100, 255, 0.5) inset;
+            z-index: 2;
+        }
+        
+        /* Page Header Styles */
+        .page-header-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        .page-header-content h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        .cta-button {
+            background-color: #ff6600;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            gap: 10px;
+        }
+        
+        .cta-button i {
+            font-size: 1em;
+        }
+
+        .cta-button:hover {
+            background-color: #e65c00;
+        }
+        
+        .hero-dots {
+            z-index: 3;
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .hero-dots span {
+            width: 10px;
+            height: 10px;
+            background-color: #444;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .hero-dots span.active {
+            background-color: #ff6600;
+        }
+
+        /* Main Content Sections */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 0;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        /* Card Styles */
+        .card {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #ff6600;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-content h3 {
+            margin-top: 0;
+        }
+        
+        .card-content p {
+            margin: 5px 0;
+            color: #ccc;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
+        .view-button {
+            background-color: #ff6600;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+            transition: background-color 0.3s ease;
+        }
+
+        .view-button:hover {
+            background-color: #e65c00;
+        }
+
+        /* Live Streams List */
+        .live-streams-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .live-streams-list li {
+            background-color: #2a2a2a;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.3s ease;
+        }
+
+        .live-streams-list li:hover {
+            background-color: #3a3a3a;
+        }
+
+        .stream-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stream-info img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .stream-info h4 {
+            margin: 0;
+        }
+
+        .watch-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .watch-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Footer Styles */
+        .main-footer {
+            background-color: #000;
+            color: #ccc;
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 2px solid #ff6600;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5em;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #ff6600;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="logo">SP GAMER</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#">TOURNAMENTS</a></li>
+                <li><a href="#">TEAMS</a></li>
+                <li><a href="#">PLAYERS</a></li>
+                <li><a href="#">NEWS</a></li>
+                <li><a href="#">STORE</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header-content">
+            <h1>SP LIVE GAMER TOURNAMENTS</h1>
+            <button class="cta-button"><i class="fas fa-play"></i> WATCH LIVE</button>
+        </section>
+
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-dots">
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="grid-container">
+                <div class="col-featured">
+                    <h2>FEATURED TOURNAMENTS</h2>
+                    <div class="grid-container">
+                        <div class="card">
+                            <img src="https://i.postimg.cc/zXf8BwbH/mincraft.png" alt="Tournament Image" class="card-image">
+                            <div class="card-badge">20P</div>
+                            <div class="card-content">
+                                <h3>Mincraft</h3>
+                                <p>Prize = Rs 20</p>
+                                <button class="view-button">View</button>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="https://i.postimg.cc/050yr2VF/freefire.jpg" alt="Tournament Image" class="card-image">
+                            <div class="card-badge">20P</div>
+                            <div class="card-content">
+                                <h3>Free Fire</h3>
+                                <p>Prize = Rs 20</p>
+                                <button class="view-button">View</button>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="https://i.postimg.cc/L8cpNryj/bgmi.avif" alt="Tournament Image" class="card-image">
+                            <div class="card-badge">20P</div>
+                            <div class="card-content">
+                                <h3>BGMI</h3>
+                                <p>Prize = Rs 20</p>
+                                <button class="view-button">View</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-streams">
+                    <h2>LIVE STREAMS</h2>
+                    <ul class="live-streams-list">
+                        <li>
+                            <div class="stream-info">
+                                <img src="https://i.ytimg.com/vi_webp/RJqo8CtoLJw/maxresdefault.webp" alt="Streamer Image">
+                                <h4>Stream 1</h4>
+                            </div>
+                            <button class="watch-button">Watch</button>
+                        </li>
+                        <li>
+                            <div class="stream-info">
+                                <img src="https://i.postimg.cc/9M1vTMrF/sp2.jpg" alt="Streamer Image">
+                                <h4>Stream 2</h4>
+                            </div>
+                            <button class="watch-button">Watch</button>
+                        </li>
+                        <li>
+                            <div class="stream-info">
+                                <img src="https://i.postimg.cc/4NMRBmwY/sp.jpg" alt="Streamer Image">
+                                <h4>Stream 3</h4>
+                            </div>
+                            <button class="watch-button">Watch</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <section class="upcoming-tournaments">
+                <h2>UPCOMING TOURNAMENTS</h2>
+                <div class="grid-container">
+                    <div class="card">
+                        <img src="https://i.postimg.cc/fb8Kf0jF/valomobile.webp" alt="Upcoming Tournament" class="card-image">
+                        <div class="card-badge">2026</div>
+                        <div class="card-content">
+                            <h3>Valorant Mobile</h3>
+                            <p>Prize: Rs ?</p>
+                            <button class="view-button">Register</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="https://i.postimg.cc/1XnV1xQs/coc.jpg" alt="Upcoming Tournament" class="card-image">
+                        <div class="card-badge">2026</div>
+                        <div class="card-content">
+                            <h3>Clash Of Clan War</h3>
+                            <p>Prize: Rs ?</p>
+                            <button class="view-button">Register</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="https://i.postimg.cc/cHJ8TgkK/clashroyale.png" alt="Upcoming Tournament" class="card-image">
+                        <div class="card-badge">2026</div>
+                        <div class="card-content">
+                            <h3>Clash Royal</h3>
+                            <p>Prize: Rs ?</p>
+                            <button class="view-button">Register</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <p>&copy; 2023 SP Gamer. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
